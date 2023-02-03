@@ -1216,6 +1216,42 @@ async function askQuestion(totalQuizQuestions, counter, fromBack) {
         `);
       }
     });
+    //Do not add any of the above option to class answer inner
+    $("#typeSelection .answerInner").append(`
+      <div>
+      <button id="none" data-val="none" data-id="none" class="selectionBtnsselectionBtn">
+      None of the Above
+      </button>
+      </div>
+    `);
+    //Added checkAllergie to selectionBtn answer class expert none
+    $(".selectionBtn").on("click", (e) =>{
+      if(e.target.dataset.val !== "none") {
+        return checkAllergies();
+      }
+    });
+
+    //when none of the above option is selected 
+    $("#none").on("click", ()=>{
+
+      //set the selections to null and handleNoneOfTheAbove() is called
+      alreadyAnswered.answer = null;
+      handleNoneOfTheAbove()
+    })
+    if(alreadyAnswered && alreadyAnswered.answer){
+      if(Array.isArray(alreadyAnswered.answer)){
+        alreadyAnswered.answer.forEach((answer)=>{
+            currentQuestionCounter++
+        })
+      }
+    }
+    async function storeAnswer(currentQuestion, currentActiveAnswerType){
+      var temp = [];
+      temp["question"] = currentQuestion
+    }
+
+
+
 
     if (alreadyAnswered && alreadyAnswered.answer) {
       if (Array.isArray(alreadyAnswered.answer)) {
