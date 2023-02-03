@@ -1229,6 +1229,7 @@ async function askQuestion(totalQuizQuestions, counter, fromBack) {
       if(e.target.dataset.val !== "none") {
         return checkAllergies();
       }
+      return checkAllergies(e.target.dataset.val)
     });
 
     //when none of the above option is selected 
@@ -1236,8 +1237,14 @@ async function askQuestion(totalQuizQuestions, counter, fromBack) {
 
       //set the selections to null and handleNoneOfTheAbove() is called
       alreadyAnswered.answer = null;
+      if(alreadyAnswered){
+        alreadyAnswered.answer = null
+      }else {
+        alreadyAnswered = null
+      }
       handleNoneOfTheAbove()
     })
+    
     if(alreadyAnswered && alreadyAnswered.answer){
       if(Array.isArray(alreadyAnswered.answer)){
         alreadyAnswered.answer.forEach((answer)=>{
