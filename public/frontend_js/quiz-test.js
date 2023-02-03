@@ -1244,7 +1244,7 @@ async function askQuestion(totalQuizQuestions, counter, fromBack) {
       }
       handleNoneOfTheAbove()
     })
-    
+
     if(alreadyAnswered && alreadyAnswered.answer){
       if(Array.isArray(alreadyAnswered.answer)){
         alreadyAnswered.answer.forEach((answer)=>{

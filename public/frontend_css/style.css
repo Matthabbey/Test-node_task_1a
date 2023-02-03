@@ -836,6 +836,14 @@ input::-ms-input-placeholder {
   width: -moz-max-content;
   position: relative;
 }
+
+/* added by AYO */
+.nameContainer{
+  position:absolute;
+  top: 100px;
+  left: 215px;
+}
+
 #page4 .createdByName {
   font: 16px "Necto Mono";
   font-weight: 700;
