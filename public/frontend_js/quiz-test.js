@@ -58,7 +58,7 @@ let responseClosed = false;
 let closeResponseTimeout;
 let mainConfigurations;
 let profile_characteristics = {};
-let nextQuestionTimeoutCounter = 3000;
+let nextQuestionTimeoutCounter = 10000;
 let selectionQuestionTimeoutCounter = 6000;
 let closeResponseTimeoutCounter = 5000;
 let timeout;
@@ -1202,6 +1202,7 @@ async function askQuestion(totalQuizQuestions, counter, fromBack) {
       $("#myRange").trigger("input", [true]);
     }
   } // type 6 ends here
+
   else if (type == 7) {
     $("#typeSelection .answerInner").html("");
     $("#typeSelection").css("display", "block");
@@ -1236,7 +1237,6 @@ async function askQuestion(totalQuizQuestions, counter, fromBack) {
     $("#none").on("click", ()=>{
 
       //set the selections to null and handleNoneOfTheAbove() is called
-      alreadyAnswered.answer = null;
       if(alreadyAnswered){
         alreadyAnswered.answer = null
       }else {
@@ -1304,6 +1304,46 @@ async function askQuestion(totalQuizQuestions, counter, fromBack) {
     $("#questionRow h1").html(ques.question);
   }
   currentQuestionCounter++;
+}
+
+async function terminateQuiz() {
+
+  //set the default currentQuestionCounter to 1000000 seconds
+  currentQuestionCounter = 1000000;
+  clearTimeout(closeResponseTimeout);
+
+  $("#page1").hide();
+  $("#page2").hide();
+  $("#page3").hide();
+  $("#page4").hide();
+  $("#page5").hide();
+  $("#page6").hide();
+  $("#page7").hide();
+  $("#page8").hide();
+  $("#progressBarSection").hide();
+  $("#terminatePage").css("display", "flex");
+
+  const res = await fetch("/admin/getTerminationMsg");
+  const { terminationMsg, countDownNo } = await res.json();
+  let i = countDownNo;
+  $(".terminationMsg").text(terminationMsg);
+
+  $(".countDownNo").text(i);
+  const interval = setInterval(() => {
+    $(".countDownNo").text(--i);
+    if (i === 0) {
+      //clear interval
+      clearInterval(interval);
+      //redirect
+      window.location.href = "/";
+    }
+  }, 1000);
+}
+
+function checkAllergie(ingredient) {
+  if (ingredient !== "none" && ["Banana", "Olive", "Sunflowers"].includes(ingredient)) {
+    terminateQuiz()
+  }
 }
 
 async function storeAnswer(currentQuestion, currentActiveAnswerType) {
