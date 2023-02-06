@@ -44,7 +44,7 @@ Then add an option at the end of all options that says None of the above and onc
 
 ### Quiz 4
 
-implement a function that is called checkAllergie()<br>
+implement a function that is called checkAllergie()<br> veal
 pseudo steps of the function
 
 - find a way to read the dataset values on the html button element that generated the click
